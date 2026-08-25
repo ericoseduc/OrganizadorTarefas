@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Tarefas</title>
+    <link rel="stylesheet" href="./assets/css/tarefas.css">
+</head>
+<body>
+    <header>
+        <h1>Organizador de Tarefas</h1>
+    </header>   
+    <main>
+        <form id="task-form">
+            <label for="task-input">Nova Tarefa:</label> 
+            <input type="text" id="task-input" placeholder="Digite sua tarefa..." required>
+            <label for="task-priority">Prioridade:</label>
+            <select id="task-priority" required>
+                <option value="">Selecione a prioridade</option>
+                <option value="1">Alta</option>
+                <option value="2">Média</option>
+                <option value="3">Baixa</option>
+            </select>
+            <label for="task-deadline">Prazo:</label>
+            <input type="date" id="task-deadline" required>
+            <button id="submit-btn" type="submit">Adicionar</button>
+        </form>
+        <ul id="task-list"></ul>
+    </main>
+    <footer>
+        <p>&copy; 2026 Organizador de Tarefas. Todos os direitos reservados.</p>
+    </footer>
+</body>
+<script src="./assets/js/tarefas.js"></script>
+<script src="./assets/js/crudTarefas.js"></script>
+</html>
