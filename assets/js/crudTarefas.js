@@ -24,3 +24,30 @@ const salvarTarefa = (titulo, prioridade, prazo) => {
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
     alert('Tarefa salva com sucesso!');
 }
+
+const localizarTarefa = (codigo) => {
+    const tarefa = tarefas.find(tarefa => tarefa.codigo === codigo);
+    if (!tarefa) {
+        throw new Error('Tarefa não encontrada.');
+    }
+    return tarefa;
+}
+
+const atualizarTarefa = (codigo, titulo, prioridade, prazo, status) => {
+    const tarefa = localizarTarefa(codigo);
+    tarefa.titulo = titulo;
+    tarefa.prioridade = prioridade;
+    tarefa.prazo = prazo;
+    tarefa.status = status;
+
+    validarTarefa(tarefa);
+
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+    alert('Tarefa atualizada com sucesso!');
+}
+
+const excluirTarefa = (codigo) => {
+    tarefas = tarefas.filter(tarefa => tarefa.codigo !== codigo);
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+    alert('Tarefa excluída com sucesso!');
+}   
