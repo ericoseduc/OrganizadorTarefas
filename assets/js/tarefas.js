@@ -1,7 +1,9 @@
-const submitButton = document.querySelector('#submit-btn');
 
-submitButton.addEventListener('click', (event) => {
-    event.preventDefault();
+const submitButton = document.querySelector('#submit-btn');
+const mensagemErro = document.querySelector('#error-message');
+
+const adicionarTarefa = (event) => {
+     event.preventDefault();
 
     const tituloTarefa = document.querySelector('#task-input').value;
     const prioridadeTarefa = document.querySelector('#task-priority').value;
@@ -11,9 +13,11 @@ submitButton.addEventListener('click', (event) => {
         salvarTarefa(tituloTarefa, prioridadeTarefa, prazoTarefa);
     } catch (error) {
         console.error('Error:', error);
-        alert(error.message);
+        mensagemErro.textContent = error.message;
     }
-});
+}
+
+submitButton.addEventListener('click', adicionarTarefa);
 
 const buscarPrioridade = (prioridade) => {
     switch (prioridade) {
@@ -46,6 +50,7 @@ const mostrarTarefas = () => {
             <td>
                 <button class="edit-btn" data-codigo="${tarefa.codigo}">Editar</button>
                 <button class="delete-btn" data-codigo="${tarefa.codigo}">Excluir</button>
+                <button class="status-btn" data-codigo="${tarefa.codigo}">${tarefa.status ? 'Concluir' : 'Pendente'}</button>
             </td>
         `;
         tarefasContainer.appendChild(tarefaElement);
@@ -60,16 +65,16 @@ const mostrarTarefas = () => {
             document.querySelector('#task-priority').value = tarefa.prioridade;
             document.querySelector('#task-deadline').value = tarefa.prazo;
             submitButton.textContent = 'Atualizar Tarefa';
-            submitButton.removeEventListener('click', salvarTarefa);
+            submitButton.removeEventListener('click', adicionarTarefa);
             submitButton.addEventListener('click', (event) => {
                 event.preventDefault();
                 try {
                     atualizarTarefa(codigo, document.querySelector('#task-input').value, document.querySelector('#task-priority').value, document.querySelector('#task-deadline').value, tarefa.status);
-                    mostrarTarefas();''
+                    mostrarTarefas();
                     submitButton.textContent = 'Adicionar';
                 } catch (error) {
                     console.error('Error:', error);
-                    alert(error.message);
+                    mensagemErro.textContent = error.message;
                 }
             });
         });
@@ -80,7 +85,17 @@ const mostrarTarefas = () => {
         button.addEventListener('click', (event) => {
             const codigo = parseInt(event.target.getAttribute('data-codigo'));
             excluirTarefa(codigo);
-            mostrarTarefas();
+            // mostrarTarefas();
+        });
+    });
+
+    const statusButtons = document.querySelectorAll('.status-btn');
+    statusButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const codigo = parseInt(event.target.getAttribute('data-codigo'));
+            const tarefa = localizarTarefa(codigo);
+            atualizarTarefa(codigo, tarefa.titulo, tarefa.prioridade, tarefa.prazo, !tarefa.status);
+            // mostrarTarefas();
         });
     });
 }

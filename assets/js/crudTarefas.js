@@ -22,7 +22,8 @@ const salvarTarefa = (titulo, prioridade, prazo) => {
 
     tarefas.push(tarefa);
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
-    alert('Tarefa salva com sucesso!');
+    window.location.reload();
+    mensagemErro.textContent = 'Tarefa salva com sucesso!';
 }
 
 const localizarTarefa = (codigo) => {
@@ -43,11 +44,13 @@ const atualizarTarefa = (codigo, titulo, prioridade, prazo, status) => {
     validarTarefa(tarefa);
 
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
-    alert('Tarefa atualizada com sucesso!');
+    window.location.reload();
+    mensagemErro.textContent = 'Tarefa atualizada com sucesso!';
 }
 
 const excluirTarefa = (codigo) => {
     tarefas = tarefas.filter(tarefa => tarefa.codigo !== codigo);
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
-    alert('Tarefa excluída com sucesso!');
+    window.location.reload();
+    mensagemErro.textContent = 'Tarefa excluída com sucesso!';
 }   
